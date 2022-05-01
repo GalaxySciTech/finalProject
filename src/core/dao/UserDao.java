@@ -30,6 +30,7 @@ public class UserDao {
                 }
                 System.out.println("User Found");
                 User u = new User();
+                u.setId(resultSet.getInt("id"));
                 u.setUserName(resultSet.getString("username"));
 
                 u.setPassword(resultSet.getString("password"));

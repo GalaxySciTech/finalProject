@@ -1,12 +1,14 @@
 package core.model;
 
+import java.math.BigDecimal;
+
 public class Bank {
 
 	private Integer id;
 
     private Integer userId;
 
-    private Integer balance;
+    private BigDecimal balance;
 
     public Integer getId() {
         return id;
@@ -24,11 +26,11 @@ public class Bank {
         this.userId = userId;
     }
 
-    public Integer getBalance() {
+    public BigDecimal getBalance() {
         return balance;
     }
 
-    public void setBalance(Integer balance) {
+    public void setBalance(BigDecimal balance) {
         this.balance = balance;
     }
 }
