@@ -35,18 +35,22 @@ public class LoginController implements Initializable {
 
     private UserDao userDao;
 
+    public static User u;
+
     public void login(ActionEvent event) throws IOException {
+        u = null;
         User user = new User();
         user.setUserName(userName.getText());
         user.setPassword(password.getText());
         user.setIsAdmin(Boolean.parseBoolean(isAdmin.getText()) ? 1 : 0);
-        User u = userDao.find(user);
+        u = userDao.find(user);
         if (u == null) {
             update.setText("Invalid UserName or password");
             return;
         }
         AnchorPane root = FXMLLoader.load(Objects.requireNonNull(getClass().getClassLoader().getResource("view/bank.fxml")));
-        Stage stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();

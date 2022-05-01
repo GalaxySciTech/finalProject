@@ -16,7 +16,7 @@ public class BankDao {
         List<Bank> banks = new ArrayList<>();
         try {
             Connection conn = connFactory.getConnection();
-            String sql = "SELECT * FROM bank  WHERE user_id=? ORDER BY id ASC ";
+            String sql = "SELECT * FROM rld_bank  WHERE user_id=? ORDER BY id ASC ";
             PreparedStatement pStmt = conn.prepareStatement(sql);
             pStmt.setInt(1, queryBank.getUserId());
             try {
@@ -36,6 +36,63 @@ public class BankDao {
             return banks;
         } catch (Exception e) {
             return null;
+        }
+    }
+
+    public int add(Bank addBank) {
+        try {
+            Connection conn = connFactory.getConnection();
+            String sql = "insert into rld_bank (user_id,balance)values(?,?)";
+            PreparedStatement pStmt = conn.prepareStatement(sql);
+            pStmt.setInt(1, addBank.getUserId());
+            pStmt.setBigDecimal(2, addBank.getBalance());
+            try {
+                System.out.println("Add a record");
+                return pStmt.executeUpdate();
+            } catch (Exception e) {
+                e.printStackTrace();
+                return 0;
+            }
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+
+    public int update(Bank updateBank) {
+        try {
+            Connection conn = connFactory.getConnection();
+            String sql = "update rld_bank set balance= ? ,user_id=? where id=?";
+            PreparedStatement pStmt = conn.prepareStatement(sql);
+            pStmt.setBigDecimal(1, updateBank.getBalance());
+            pStmt.setInt(2, updateBank.getUserId());
+            pStmt.setInt(3, updateBank.getId());
+            try {
+                System.out.println("Update a record");
+                return pStmt.executeUpdate();
+            } catch (Exception e) {
+                e.printStackTrace();
+                return 0;
+            }
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+
+    public int delete(Integer bankId) {
+        try {
+            Connection conn = connFactory.getConnection();
+            String sql = "delete rld_bank where id=?";
+            PreparedStatement pStmt = conn.prepareStatement(sql);
+            pStmt.setInt(1, bankId);
+            try {
+                System.out.println("Delete a record");
+                return pStmt.executeUpdate();
+            } catch (Exception e) {
+                e.printStackTrace();
+                return 0;
+            }
+        } catch (Exception e) {
+            return 0;
         }
     }
 
