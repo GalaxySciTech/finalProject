@@ -81,7 +81,7 @@ public class BankDao {
     public int delete(Integer bankId) {
         try {
             Connection conn = connFactory.getConnection();
-            String sql = "delete rld_bank where id=?";
+            String sql = "delete from rld_bank where id=?";
             PreparedStatement pStmt = conn.prepareStatement(sql);
             pStmt.setInt(1, bankId);
             try {
