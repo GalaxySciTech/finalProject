@@ -55,7 +55,7 @@ public class BankDao {
             pStmt.setInt(1, addBank.getUserId());
             pStmt.setBigDecimal(2, addBank.getBalance());
             try {
-                System.out.println("Add a record");
+                System.out.println("Add a record id ");
                 return pStmt.executeUpdate();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -75,7 +75,7 @@ public class BankDao {
             pStmt.setInt(2, updateBank.getUserId());
             pStmt.setInt(3, updateBank.getId());
             try {
-                System.out.println("Update a record");
+                System.out.println("Update a record id " + updateBank.getId());
                 return pStmt.executeUpdate();
             } catch (Exception e) {
                 e.printStackTrace();
@@ -93,7 +93,7 @@ public class BankDao {
             PreparedStatement pStmt = conn.prepareStatement(sql);
             pStmt.setInt(1, bankId);
             try {
-                System.out.println("Delete a record");
+                System.out.println("Delete a record id " + bankId);
                 return pStmt.executeUpdate();
             } catch (Exception e) {
                 e.printStackTrace();
