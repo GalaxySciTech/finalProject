@@ -16,9 +16,17 @@ public class BankDao {
         List<Bank> banks = new ArrayList<>();
         try {
             Connection conn = connFactory.getConnection();
-            String sql = "SELECT * FROM rld_bank  WHERE user_id=? ORDER BY id ASC ";
-            PreparedStatement pStmt = conn.prepareStatement(sql);
-            pStmt.setInt(1, queryBank.getUserId());
+            PreparedStatement pStmt;
+            if (queryBank.getUserId() == null) {
+                String sql = "SELECT * FROM rld_bank  ORDER BY id ASC ";
+                pStmt = conn.prepareStatement(sql);
+
+            } else {
+                String sql = "SELECT * FROM rld_bank  WHERE user_id=? ORDER BY id ASC ";
+                pStmt = conn.prepareStatement(sql);
+                pStmt.setInt(1, queryBank.getUserId());
+            }
+
             try {
                 conn.setAutoCommit(false);
                 ResultSet resultSet = pStmt.executeQuery();

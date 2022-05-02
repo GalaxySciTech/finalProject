@@ -2,14 +2,16 @@ package core.controller;
 
 import core.dao.BankDao;
 import core.model.Bank;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.math.BigDecimal;
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class BankController implements Initializable {
@@ -17,13 +19,13 @@ public class BankController implements Initializable {
     @FXML
     public Label update;
     @FXML
-    public TableView table;
+    public TableView<Bank> table;
     @FXML
-    public TableColumn bankId;
+    public TableColumn<Bank, Integer> bankId;
     @FXML
-    public TableColumn bankUserId;
+    public TableColumn<Bank, Integer> bankUserId;
     @FXML
-    public TableColumn bankBalance;
+    public TableColumn<Bank, String> bankBalance;
     @FXML
     public Button addBtn;
     @FXML
@@ -51,13 +53,14 @@ public class BankController implements Initializable {
 
     public void getBank() {
         Bank query = new Bank();
-        query.setUserId(LoginController.u.getId());
-        List<Bank> list = bankDao.find(query);
+        if (LoginController.u.getIsAdmin() != 1)
+            query.setUserId(LoginController.u.getId());
+        ObservableList<Bank> list = FXCollections.observableArrayList(bankDao.find(query));
         if (list.isEmpty()) return;
-        Bank bank = list.get(0);
-        bankId.setText(bank.getId().toString());
-        bankUserId.setText(bank.getUserId().toString());
-        bankBalance.setText(bank.getBalance().toPlainString());
+        bankId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        bankUserId.setCellValueFactory(new PropertyValueFactory<>("userId"));
+        bankBalance.setCellValueFactory(new PropertyValueFactory<>("balance"));
+        table.setItems(list);
     }
 
     public void addBank(ActionEvent event) {
